@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PORTFOLIO</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=DotGothic16&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="loading-screen">
+        <img src="images/loading.png" alt="Now Loading..." class="loading-character">
+        <p class="loading-text">NOW LOADING...</p>
+    </div>
+    <header class="site-header">
+        <button class="hamburger-button" id="js-hamburger">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+        <nav class="hamburger-nav" id="js-nav">
+            <ul>
+                <li><a href="#top">TOP</a></li>
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="works.html">WORKS</a></li>
+                <li><a href="illust.html">ILLUST</a></li>
+                <li><a href="#contact">CONTACT</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="about" class="content-section is-left">
+            <div class="window">
+                <div class="title-bar">
+                    <div class="title">ABOUT</div>
+                    <div class="buttons">
+                        <div class="btn-minimize"></div>
+                        <div class="btn-maximize"></div>
+                        <div class="btn-close"></div>
+                    </div>
+                </div>
+                <div class="window-content">
+                    <div class="about-container">
+                        <div class="about-image-frame">
+                            <img src="images/about.png" alt="あなたのキャラクター">
+                        </div>
+                        <div class="about-profile">
+                            <p class="profile-name"><strong>NAME:</strong> HAL_T</p>
+                            <p>ここに自己紹介の一言が入ります。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="works" class="content-section is-right">
+            <div class="window">
+                <div class="title-bar">
+                    <div class="title">WORKS</div>
+                    <div class="buttons">
+                        <div class="btn-minimize"></div>
+                        <div class="btn-maximize"></div>
+                        <div class="btn-close"></div>
+                    </div>
+                </div>
+                <div class="window-content works-buttons-grid">
+                    <a href="works.html" class="work-button">HOMEPAGE</a>
+                    <a href="works.html" class="work-button">UI</a>
+                    <a href="works.html" class="work-button">GRAPHIC</a>
+                    <a href="works.html" class="work-button">LOGO</a>
+                </div>
+            </div>
+        </section>
+        <section id="illust" class="content-section is-left">
+            <div class="window">
+                <div class="title-bar">
+                    <div class="title">ILLUST</div>
+                    <div class="buttons">
+                        <div class="btn-minimize"></div>
+                        <div class="btn-maximize"></div>
+                        <div class="btn-close"></div>
+                    </div>
+                </div>
+                <div class="window-content works-buttons-grid">
+                    <a href="illust.html" class="work-button">ORIGINAL</a>
+                    <a href="illust.html" class="work-button">FAN ART</a>
+                </div>
+            </div>
+        </section>
+        <section id="contact" class="content-section">
+             <div class="window">
+                <div class="title-bar">
+                    <div class="title">CONTACT</div>
+                    <div class="buttons">
+                        <div class="btn-minimize"></div>
+                        <div class="btn-maximize"></div>
+                        <div class="btn-close"></div>
+                    </div>
+                </div>
+                <div class="window-content">
+                    <p>ご連絡はこちらまで</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="site-footer">
+        <nav>
+            <ul>
+                <li><a href="#top">TOP</a></li>
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="works.html">WORKS</a></li>
+                <li><a href="illust.html">ILLUST</a></li>
+                <li><a href="#contact">CONTACT</a></li>
+            </ul>
+        </nav>
+        <p class="copyright">&copy;2025 HAL_T</p>
+        <img src="images/barcode.png" alt="barcode" class="barcode-img">
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

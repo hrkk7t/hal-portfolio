@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ILLUST | PORTFOLIO</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=DotGothic16&display=swap" rel="stylesheet">
+</head>
+<body class="page-illust">
+    <div id="loading-screen">
+        <img src="images/loading.png" alt="Now Loading..." class="loading-character">
+        <p class="loading-text">NOW LOADING...</p>
+    </div>
+    <header class="site-header">
+        <button class="hamburger-button" id="js-hamburger">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+        <nav class="hamburger-nav" id="js-nav">
+            <ul>
+                <li><a href="index.html">TOP</a></li>
+                <li><a href="index.html#about">ABOUT</a></li>
+                <li><a href="works.html">WORKS</a></li>
+                <li><a href="illust.html">ILLUST</a></li>
+                <li><a href="index.html#contact">CONTACT</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="works-container">
+            <img src="images/illust.png" alt="Illust" class="page-title-img">
+            <div class="filter-tabs">
+                <button class="filter-btn is-active" data-filter="all">ALL</button>
+                <button class="filter-btn" data-filter="original">ORIGINAL</button>
+                <button class="filter-btn" data-filter="fanart">FAN ART</button>
+            </div>
+            <div class="works-grid">
+                <a href="#" class="work-item" data-category="original" data-image="images/illust-01.jpg" data-title="クトゥルフさん">
+                    <img src="images/illust-01.jpg" alt="クトゥルフさん">
+                </a>
+               <a href="#" class="work-item" data-category="original" data-image="images/illust-02.jpg" data-title="人外頭さん01">
+    <img src="images/illust-02.jpg" alt="人外頭さん01">
+</a>
+            </div>
+        </div>
+    </main>
+    <div id="modal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="title-bar">
+                <div id="modal-title-bar" class="title">TITLE</div>
+                <div class="buttons">
+                    <div class="btn-minimize"></div>
+                    <div class="btn-maximize"></div>
+                    <div id="modal-close-btn" class="btn-close"></div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image-wrapper">
+                    <img id="modal-image" src="" alt="作品の拡大画像">
+                </div>
+                <div class="modal-text-wrapper">
+                    <h2 id="modal-title"></h2>
+                    <p id="modal-description"></p>
+                    <a id="modal-link" href="#" target="_blank" rel="noopener noreferrer">サイトを見る &gt;</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="site-footer">
+        <nav>
+            <ul>
+                <li><a href="index.html">TOP</a></li>
+                <li><a href="index.html#about">ABOUT</a></li>
+                <li><a href="works.html">WORKS</a></li>
+                <li><a href="illust.html">ILLUST</a></li>
+                <li><a href="index.html#contact">CONTACT</a></li>
+            </ul>
+        </nav>
+        <p class="copyright">&copy;2025 HAL_T</p>
+        <img src="images/barcode.png" alt="barcode" class="barcode-img">
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
