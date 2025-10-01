@@ -6,7 +6,7 @@ body {
     color: #000;
     font-family: 'Dela Gothic One', sans-serif;
     margin: 0;
-    padding: 100px 0;
+    padding-top: 100px; /* フッターの固定をやめたため下のpaddingは削除 */
 }
 .site-header {
     background-color: #000;
@@ -19,15 +19,14 @@ body {
 .site-footer {
     background-color: #000;
     padding: 20px 0;
-    position: fixed;
     width: 100%;
     z-index: 10;
-    bottom: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
+    /* position: fixedをやめ、通常のフッターに */
 }
 .site-footer nav ul {
     list-style: none;
@@ -65,7 +64,7 @@ body {
     justify-content: center;
 }
 .window {
-    width: 80%;
+    width: 100%; /* 基本幅を100%に */
     max-width: 600px;
     background-color: #fff;
     border: 3px solid #000;
@@ -73,6 +72,7 @@ body {
     opacity: 0;
     transform: scale(0.7);
     transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease-out;
+    margin-bottom: 40px;
 }
 .window.is-visible {
     opacity: 1;
@@ -188,11 +188,7 @@ body {
     padding: 0;
 }
 .barcode-img {
-    position: absolute;
-    right: 20px;
-    bottom: 20px;
-    height: 40px;
-    filter: invert(1);
+    height: 30px; /* 少し小さく */
 }
 .about-container {
     display: flex;
@@ -240,15 +236,9 @@ body {
     animation: fuyofuyo 2.5s ease-in-out infinite;
 }
 @keyframes fuyofuyo {
-    0% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-20px);
-    }
-    100% {
-        transform: translateY(0);
-    }
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0); }
 }
 .loading-text {
     color: #fff;
@@ -302,9 +292,7 @@ body {
     display: block;
     object-fit: cover;
 }
-.work-item.is-hidden {
-    display: none;
-}
+.work-item.is-hidden { display: none; }
 .modal {
     position: fixed;
     top: 0;
@@ -334,7 +322,7 @@ body {
 }
 .modal-content {
     position: relative;
-    width: 80%;
+    width: 90%;
     max-width: 900px;
     background-color: #fff;
     border: 3px solid #000;
@@ -342,15 +330,9 @@ body {
     transform: scale(0.7);
     transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-.modal.is-visible .modal-content {
-    transform: scale(1);
-}
-.modal .title-bar {
-    position: relative;
-}
-.modal .btn-close {
-    cursor: pointer;
-}
+.modal.is-visible .modal-content { transform: scale(1); }
+.modal .title-bar { position: relative; }
+.modal .btn-close { cursor: pointer; }
 .modal-body {
     display: flex;
     align-items: flex-start;
@@ -378,7 +360,6 @@ body {
 }
 #modal-link {
     font-family: 'DotGothic16', sans-serif;
-    display: none;
     margin-top: 20px;
     font-weight: bold;
     color: #000;
@@ -388,9 +369,7 @@ body {
     transition: opacity 0.3s;
     display: inline-block;
 }
-#modal-link:hover {
-    opacity: 0.7;
-}
+#modal-link:hover { opacity: 0.7; }
 .title-bar .title {
     font-family: 'DotGothic16', sans-serif;
     font-weight: normal;
@@ -398,14 +377,8 @@ body {
     font-size: 14px;
 }
 @keyframes pop-in {
-    from {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
 }
 .page-title-img {
     display: block;
@@ -433,24 +406,16 @@ body {
 .page-illust .work-item:hover::after {
     background-color: rgba(0, 0, 0, 0.4);
 }
-.modal-content.is-image-only {
-    width: auto;
-}
-.modal-content.is-image-only .modal-text-wrapper {
-    display: none;
-}
+.modal-content.is-image-only { width: auto; }
+.modal-content.is-image-only .modal-text-wrapper { display: none; }
 .modal-content.is-image-only .modal-image-wrapper {
     flex-basis: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.modal-content.is-image-only .modal-body {
-    padding: 10px;
-}
-.modal-content.is-image-only .modal-image-wrapper img {
-    border: none;
-}
+.modal-content.is-image-only .modal-body { padding: 10px; }
+.modal-content.is-image-only .modal-image-wrapper img { border: none; }
 #modal-description,
 .about-profile p,
 #contact .window-content p {
@@ -462,62 +427,63 @@ body {
     font-family: 'DotGothic16', sans-serif;
     font-size: 22px;
     line-height: 1.5;
-
 }
 
-/*
-## レスポンシブ対応（スマートフォン/タブレット表示）
-*/
-
-/* 画面幅が768px以下の場合に適用 */
+/* --- レスポンシブ対応 --- */
 @media (max-width: 768px) {
-
-    /* --- 全体的な調整 --- */
-    body {
-        padding: 80px 0 60px 0; /* 上下の余白を少し詰める */
-    }
-
-    /* --- トップページ (`index.html`) --- */
     .content-section {
-        padding: 40px 5%; /* 左右の余白を調整 */
-        justify-content: center !important; /* 全てのウィンドウを中央揃えに */
+        padding: 20px 5%;
+        min-height: auto;
+        justify-content: center !important;
     }
-
+    .about-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    .about-image-frame {
+        margin-bottom: 20px;
+    }
     .works-buttons-grid {
-        grid-template-columns: 1fr; /* ボタンを2列から1列に変更 */
+        grid-template-columns: 1fr;
     }
-
-    /* --- 作品・イラストページ (`works.html`, `illust.html`) --- */
+    .filter-tabs {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .site-footer {
+        position: static;
+        padding: 30px 10px;
+    }
+    .site-footer nav ul {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    .barcode-img {
+        position: static;
+        margin-top: 20px;
+    }
     .works-grid {
-        grid-template-columns: repeat(2, 1fr); /* 3列グリッドを2列に */
+        grid-template-columns: repeat(2, 1fr);
     }
-
     .works-container {
-        padding: 20px; /* 全体の余白を調整 */
+        padding: 20px;
     }
-
-    /* --- ポップアップモーダル --- */
     .modal-body {
-        flex-direction: column; /* 画像とテキストを横並びから縦並びに変更 */
-        max-height: 80vh;      /* ポップアップの高さを画面の80%までに制限 */
-        overflow-y: auto;      /* 内容がはみ出た場合はスクロールさせる */
+        flex-direction: column;
+        max-height: 80vh;
+        overflow-y: auto;
     }
-
     .modal-image-wrapper,
     .modal-text-wrapper {
-        flex-basis: auto; /* 幅の比率指定をリセット */
+        flex-basis: auto;
         width: 100%;
     }
 }
 
-/* 画面幅が480px以下の場合に、さらに適用 */
 @media (max-width: 480px) {
-
-    /* --- 作品・イラストページ (`works.html`, `illust.html`) --- */
     .works-grid {
-        grid-template-columns: 1fr; /* 2列グリッドを1列に */
+        grid-template-columns: 1fr;
     }
-
     .page-title-img {
         width: 280px;
     }
