@@ -462,4 +462,63 @@ body {
     font-family: 'DotGothic16', sans-serif;
     font-size: 22px;
     line-height: 1.5;
+
+}
+
+/*
+## レスポンシブ対応（スマートフォン/タブレット表示）
+*/
+
+/* 画面幅が768px以下の場合に適用 */
+@media (max-width: 768px) {
+
+    /* --- 全体的な調整 --- */
+    body {
+        padding: 80px 0 60px 0; /* 上下の余白を少し詰める */
+    }
+
+    /* --- トップページ (`index.html`) --- */
+    .content-section {
+        padding: 40px 5%; /* 左右の余白を調整 */
+        justify-content: center !important; /* 全てのウィンドウを中央揃えに */
+    }
+
+    .works-buttons-grid {
+        grid-template-columns: 1fr; /* ボタンを2列から1列に変更 */
+    }
+
+    /* --- 作品・イラストページ (`works.html`, `illust.html`) --- */
+    .works-grid {
+        grid-template-columns: repeat(2, 1fr); /* 3列グリッドを2列に */
+    }
+
+    .works-container {
+        padding: 20px; /* 全体の余白を調整 */
+    }
+
+    /* --- ポップアップモーダル --- */
+    .modal-body {
+        flex-direction: column; /* 画像とテキストを横並びから縦並びに変更 */
+        max-height: 80vh;      /* ポップアップの高さを画面の80%までに制限 */
+        overflow-y: auto;      /* 内容がはみ出た場合はスクロールさせる */
+    }
+
+    .modal-image-wrapper,
+    .modal-text-wrapper {
+        flex-basis: auto; /* 幅の比率指定をリセット */
+        width: 100%;
+    }
+}
+
+/* 画面幅が480px以下の場合に、さらに適用 */
+@media (max-width: 480px) {
+
+    /* --- 作品・イラストページ (`works.html`, `illust.html`) --- */
+    .works-grid {
+        grid-template-columns: 1fr; /* 2列グリッドを1列に */
+    }
+
+    .page-title-img {
+        width: 280px;
+    }
 }
