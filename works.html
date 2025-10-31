@@ -1,108 +1,108 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WORKS | PORTFOLIO</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=DotGothic16&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WORKS | PORTFOLIO</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=DotGothic16&display=swap" rel="stylesheet">
 </head>
 <body class="page-works">
-    <div id="loading-screen">
-        <img src="images/loading.png" alt="Now Loading..." class="loading-character">
-        <p class="loading-text">NOW LOADING...</p>
-    </div>
-    <header class="site-header">
-        <button class="hamburger-button" id="js-hamburger">
-            <span class="hamburger-line"></span>
-            <span class="hamburger-line"></span>
-        </button>
-        <nav class="hamburger-nav" id="js-nav">
-            <ul>
-                <li><a href="index.html">TOP</a></li>
-                <li><a href="index.html#about">ABOUT</a></li>
-                <li><a href="works.html">WORKS</a></li>
-                <li><a href="illust.html">ILLUST</a></li>
-                <li><a href="index.html#contact">CONTACT</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <div class="works-container">
-            <img src="images/works.png" alt="Works" class="page-title-img">
-            <div class="filter-tabs">
-                <button class="filter-btn is-active" data-filter="all">ALL</button>
-                <button class="filter-btn" data-filter="homepage">HOMEPAGE</button>
-                <button class="filter-btn" data-filter="ui">UI</button>
-                <button class="filter-btn" data-filter="graphic">GRAPHIC</button>
-                <button class="filter-btn" data-filter="logo">LOGO</button>
-            </div>
-            <div class="works-grid">
-                <a href="#" class="work-item" data-category="homepage" data-image="images/hp-01.jpg" data-title="Webサイト制作 1" data-description="SNS運用代行サービスのHPです。HPデザイン、サービス紹介イラストの作成を担当しました。" data-link="https://lipitto.ninedots.co.jp/">
-                    <img src="images/hp-01.jpg" alt="ホームページ作品のサムネイル">
-                </a>
-                <a href="#" class="work-item" data-category="homepage" data-image="images/hp-02.jpg" data-title="建設工事会社のWebサイト" data-description="建設工事会社のWebサイトデザインを担当しました。" data-link="https://www.toho-ew.co.jp/">
-                    <img src="images/hp-02.jpg" alt="建設工事会社HPのサムネイル">
-                </a>
-                <a href="#" class="work-item" data-category="homepage" data-image="images/hp-03.jpg" data-title="美容室グループのWebサイト" data-description="美容室グループのWebサイトデザインを担当しました。" data-link="https://crayon-beauty.jp/">
-                    <img src="images/hp-03.jpg" alt="美容室グループHPのサムネイル">
-                </a>
-                <a href="#" class="work-item" data-category="homepage" data-image="images/hp-04.jpg" data-title="食糧保管協会 Webサイト" data-description="青森県食糧備蓄保管協会のWebサイトデザインを担当しました。" data-link="https://aomori-shokkankyo.com/">
-                    <img src="images/hp-04.jpg" alt="食糧保管協会Webサイトのサムネイル">
-                </a>
-                <a href="#" class="work-item" data-category="ui" data-image="images/ui-01.jpg" data-title="広告代理店サイトのUIデザイン" data-description="Webサイト内で使用されるサービス紹介アイコンのデザインを担当しました。" data-link="https://p1us0ne.com/">
-                    <img src="images/ui-01.jpg" alt="広告代理店サイト アイコンデザインのサムネイル">
-                </a>
-                <a href="#" class="work-item" data-category="ui" data-image="images/ui-02.jpg" data-title="卸売会社サイトのイラスト" data-description="果物の卸売会社のWebサイトで使用されるイラスト一式を作成しました。" data-link="https://www.hiroka.jp/">
-                    <img src="images/ui-02.jpg" alt="果物の卸売会社サイト用イラストのサムネイル">
-                </a>
-                <a href="#" class="work-item" data-category="graphic" data-image="https://via.placeholder.com/800x600/FFA07A/000000?text=Graphic" data-title="グラフィック作品 1" data-description="グラフィック作品1の詳細説明です。">
-                    <img src="https://via.placeholder.com/400x300/FFA07A/000000?text=Graphic+1" alt="作品の画像">
-                </a>
-                <a href="#" class="work-item" data-category="logo" data-image="https://via.placeholder.com/800x600/20B2AA/FFFFFF?text=Logo" data-title="ロゴデザイン 1" data-description="ロゴデザイン1の詳細説明です。">
-                    <img src="https://via.placeholder.com/400x300/20B2AA/FFFFFF?text=Logo+1" alt="作品の画像">
-                </a>
-            </div>
-        </div>
-    </main>
-    <div id="modal" class="modal">
-        <div class="modal-overlay"></div>
-        <div class="modal-content">
-            <div class="title-bar">
-                <div id="modal-title-bar" class="title">TITLE</div>
-                <div class="buttons">
-                    <div class="btn-minimize"></div>
-                    <div class="btn-maximize"></div>
-                    <div id="modal-close-btn" class="btn-close"></div>
-                </div>
-            </div>
-            <div class="modal-body">
-                <div class="modal-image-wrapper">
-                    <img id="modal-image" src="" alt="作品の拡大画像">
-                </div>
-                <div class="modal-text-wrapper">
-                    <h2 id="modal-title"></h2>
-                    <p id="modal-description"></p>
-                    <a id="modal-link" href="#" target="_blank" rel="noopener noreferrer">サイトを見る &gt;</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <footer class="site-footer">
-        <nav>
-            <ul>
-                <li><a href="index.html">TOP</a></li>
-                <li><a href="index.html#about">ABOUT</a></li>
-                <li><a href="works.html">WORKS</a></li>
-                <li><a href="illust.html">ILLUST</a></li>
-                <li><a href="index.html#contact">CONTACT</a></li>
-            </ul>
-        </nav>
-        <p class="copyright">&copy;2025 HAL_T</p>
-        <img src="images/barcode.png" alt="barcode" class="barcode-img">
-    </footer>
-    <script src="script.js"></script>
+    <div id="loading-screen">
+        <img src="images/loading.png" alt="Now Loading..." class="loading-character">
+        <p class="loading-text">NOW LOADING...</p>
+    </div>
+    <header class="site-header">
+        <button class="hamburger-button" id="js-hamburger">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+        <nav class="hamburger-nav" id="js-nav">
+            <ul>
+                <li><a href="index.html">TOP</a></li>
+                <li><a href="index.html#about">ABOUT</a></li>
+                <li><a href="works.html">WORKS</a></li>
+                <li><a href="illust.html">ILLUST</a></li>
+                <li><a href="index.html#contact">CONTACT</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="works-container">
+            <img src="images/works.png" alt="Works" class="page-title-img">
+            <div class="filter-tabs">
+                <button class="filter-btn is-active" data-filter="all">ALL</button>
+                <button class="filter-btn" data-filter="homepage">HOMEPAGE</button>
+                <button class="filter-btn" data-filter="ui">UI</button>
+                <button class="filter-btn" data-filter="graphic">GRAPHIC</button>
+                <button class="filter-btn" data-filter="logo">LOGO</button>
+            </div>
+            <div class="works-grid">
+                                <a href="#" class="work-item" data-category="homepage" data-image="images/hp-01.jpg" data-title="Webサイト制作 1" data-description="担当範囲：HPデザイン、サービス紹介イラスト<br>制作期間：約20時間<br>仕様技術：Adobe Illustrator,Adobe XD" data-link="https://lipitto.ninedots.co.jp/">
+                    <img src="images/hp-01.jpg" alt="ホームページ作品のサムネイル">
+                </a>
+                                <a href="#" class="work-item" data-category="homepage" data-image="images/hp-02.jpg" data-title="建設工事会社のWebサイト" data-description="担当範囲：HPデザイン<br>制作期間：約15時間<br>仕様技術：Adobe XD" data-link="https://www.toho-ew.co.jp/">
+                    <img src="images/hp-02.jpg" alt="建設工事会社HPのサムネイル">
+                </a>
+                                <a href="#" class="work-item" data-category="homepage" data-image="images/hp-03.jpg" data-title="美容室グループのWebサイト" data-description="担当範囲：HPデザイン<br>制作期間：約20時間<br>仕様技術：Adobe XD" data-link="https://crayon-beauty.jp/">
+                    <img src="images/hp-03.jpg" alt="美容室グループHPのサムネイル">
+                </a>
+                                <a href="#" class="work-item" data-category="homepage" data-image="images/hp-04.jpg" data-title="食糧保管協会 Webサイト" data-description="担当範囲：HPデザイン<br>制作期間：約10時間<br>仕様技術：Adobe XD" data-link="https://aomori-shokkankyo.com/">
+                    <img src="images/hp-04.jpg" alt="食糧保管協会Webサイトのサムネイル">
+                </a>
+                                <a href="#" class="work-item" data-category="ui" data-image="images/ui-01.jpg" data-title="広告代理店サイトのUIデザイン" data-description="担当範囲：アイコンデザイン<br>制作期間：約5時間<br>仕様技術：Adobe Illustrator" data-link="https://p1us0ne.com/">
+                    <img src="images/ui-01.jpg" alt="広告代理店サイト アイコンデザインのサムネイル">
+                </a>
+                                <a href="#" class="work-item" data-category="ui" data-image="images/ui-02.jpg" data-title="卸売会社サイトのイラスト" data-description="担当範囲：イラストデザイン<br>制作期間：約15時間<br>仕様技術：Clip Studio Paint" data-link="https://www.hiroka.jp/">
+                    <img src="images/ui-02.jpg" alt="果物の卸売会社サイト用イラストのサムネイル">
+                </a>
+                                <a href="#" class="work-item" data-category="graphic" data-image="https://via.placeholder.com/800x600/FFA07A/000000?text=Graphic" data-title="グラフィック作品 1" data-description="グラフィック作品1の詳細説明です。">
+                    <img src="https://via.placeholder.com/400x300/FFA07A/000000?text=Graphic+1" alt="作品の画像">
+                </a>
+                                <a href="#" class="work-item" data-category="logo" data-image="https://via.placeholder.com/800x600/20B2AA/FFFFFF?text=Logo" data-title="ロゴデザイン 1" data-description="ロゴデザイン1の詳細説明です。">
+                    <img src="https://via.placeholder.com/400x300/20B2AA/FFFFFF?text=Logo+1" alt="作品の画像">
+                </a>
+            </div>
+        </div>
+    </main>
+    <div id="modal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="title-bar">
+                <div id="modal-title-bar" class="title">TITLE</div>
+                <div class="buttons">
+                    <div class="btn-minimize"></div>
+                    <div class="btn-maximize"></div>
+                    <div id="modal-close-btn" class="btn-close"></div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image-wrapper">
+                    <img id="modal-image" src="" alt="作品の拡大画像">
+                </div>
+                <div class="modal-text-wrapper">
+                    <h2 id="modal-title"></h2>
+                    <p id="modal-description"></p>
+                    <a id="modal-link" href="#" target="_blank" rel="noopener noreferrer">サイトを見る &gt;</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="site-footer">
+        <nav>
+            <ul>
+                <li><a href="index.html">TOP</a></li>
+                <li><a href="index.html#about">ABOUT</a></li>
+                <li><a href="works.html">WORKS</a></li>
+                <li><a href="illust.html">ILLUST</a></li>
+                <li><a href="index.html#contact">CONTACT</a></li>
+            </ul>
+        </nav>
+        <p class="copyright">&copy;2025 HAL_T</p>
+        <img src="images/barcode.png" alt="barcode" class="barcode-img">
+    </footer>
+    <script src="script.js"></script>
 </body>
 </html>
