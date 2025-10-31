@@ -214,25 +214,48 @@ body {
 }
 .about-profile p {
     margin: 0;
+    font-family: 'DotGothic16', sans-serif;
+    font-size: 16px;
+    line-height: 1.8;
 }
 .profile-name {
     margin-bottom: 10px;
+    font-family: 'Dela Gothic One', sans-serif !important;
+    font-size: 16px !important;
 }
 
-.profile-skills {
-    font-family: 'DotGothic16', sans-serif;
-    font-size: 14px;
-    line-height: 1.7;
-    margin-top: 15px !important;
+.profile-skill-block {
+    margin-top: 15px;
     padding-top: 15px;
     border-top: 2px solid #000;
 }
-.profile-skills strong {
+.profile-skill-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+    margin: 0 0 10px 0;
+    display: flex;
+    align-items: center;
+    font-family: 'Dela Gothic One', sans-serif;
+}
+.profile-skill-title::before {
+    content: '';
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background-color: #000;
+    margin-right: 10px;
+}
+.profile-skill-list {
+    font-family: 'DotGothic16', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 0;
+}
+.profile-skill-list strong {
     font-family: 'Dela Gothic One', sans-serif;
     font-size: 14px;
 }
-/* ▲▲▲ ここまで修正 ▲▲▲ */
-
 
 #loading-screen {
     position: fixed;
@@ -467,10 +490,12 @@ body {
         text-align: center;
     }
 
-    .profile-skills {
+    .profile-skill-title {
+        justify-content: center;
+    }
+    .profile-skill-list {
         text-align: left;
     }
-
     .about-image-frame {
         margin-bottom: 20px;
     }
