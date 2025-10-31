@@ -78,9 +78,11 @@ if (worksGrid) {
             modalTitleBar.textContent = title;
             modalImage.src = imageSrc;
             modalTitle.textContent = title;
-            modalDescription.textContent = description;
             
-            if (linkUrl) {
+            /* ▼▼▼ ここを修正しました ▼▼▼ */
+            modalDescription.innerHTML = description;
+            
+            if (linkUrl && linkUrl !== "#") { 
                 modalLink.href = linkUrl;
                 modalLink.style.display = 'inline-block';
             } else {
