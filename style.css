@@ -218,6 +218,22 @@ body {
 .profile-name {
     margin-bottom: 10px;
 }
+
+.profile-skills {
+    font-family: 'DotGothic16', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    margin-top: 15px !important;
+    padding-top: 15px;
+    border-top: 2px solid #000;
+}
+.profile-skills strong {
+    font-family: 'Dela Gothic One', sans-serif;
+    font-size: 14px;
+}
+/* ▲▲▲ ここまで修正 ▲▲▲ */
+
+
 #loading-screen {
     position: fixed;
     top: 0;
@@ -429,7 +445,7 @@ body {
 #contact .window-content p {
     font-family: 'DotGothic16', sans-serif;
     font-size: 16px;
-    line-height: 1.6;
+    line-height: 1.8;
     margin: 0;
 }
 #modal-title {
@@ -450,6 +466,11 @@ body {
         flex-direction: column;
         text-align: center;
     }
+
+    .profile-skills {
+        text-align: left;
+    }
+
     .about-image-frame {
         margin-bottom: 20px;
     }
