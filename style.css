@@ -212,39 +212,34 @@ body {
     width: 150px;
     height: 150px;
 }
+
 .about-profile p {
     margin: 0;
     font-family: 'DotGothic16', sans-serif;
     font-size: 16px;
     line-height: 1.8;
 }
-.profile-name {
-    margin-bottom: 10px;
-    font-family: 'Dela Gothic One', sans-serif !important;
-    font-size: 16px !important;
-}
-
-.profile-skill-block {
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 2px solid #000;
-}
-.profile-skill-title {
+.profile-block-title {
+    font-family: 'Dela Gothic One', sans-serif;
     font-size: 16px;
     font-weight: bold;
     color: #000;
     margin: 0 0 10px 0;
     display: flex;
     align-items: center;
-    font-family: 'Dela Gothic One', sans-serif;
 }
-.profile-skill-title::before {
+.profile-block-title.with-icon::before {
     content: '';
     display: inline-block;
     width: 14px;
     height: 14px;
     background-color: #000;
     margin-right: 10px;
+}
+.profile-skill-block {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 2px solid #000;
 }
 .profile-skill-list {
     font-family: 'DotGothic16', sans-serif;
@@ -490,12 +485,13 @@ body {
         text-align: center;
     }
 
-    .profile-skill-title {
+    .profile-block-title.with-icon {
         justify-content: center;
     }
     .profile-skill-list {
         text-align: left;
     }
+    
     .about-image-frame {
         margin-bottom: 20px;
     }
