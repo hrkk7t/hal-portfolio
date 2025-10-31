@@ -423,17 +423,20 @@ body {
 }
 .modal-content.is-image-only .modal-body { padding: 10px; }
 .modal-content.is-image-only .modal-image-wrapper img { border: none; }
+
 #modal-description,
 .about-profile p,
 #contact .window-content p {
     font-family: 'DotGothic16', sans-serif;
     font-size: 16px;
-    line-height: 1.8;
+    line-height: 1.6;
+    margin: 0;
 }
 #modal-title {
     font-family: 'DotGothic16', sans-serif;
     font-size: 22px;
     line-height: 1.5;
+    margin: 0 0 15px 0;
 }
 
 /* --- レスポンシブ対応 --- */
