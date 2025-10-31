@@ -78,8 +78,6 @@ if (worksGrid) {
             modalTitleBar.textContent = title;
             modalImage.src = imageSrc;
             modalTitle.textContent = title;
-            
-            /* ▼▼▼ ここを修正しました ▼▼▼ */
             modalDescription.innerHTML = description;
             
             if (linkUrl && linkUrl !== "#") { 
@@ -112,3 +110,4 @@ if (worksGrid) {
         });
     }
 }
+
