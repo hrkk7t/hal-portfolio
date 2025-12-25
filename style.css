@@ -533,3 +533,28 @@ body {
         width: 280px;
     }
 }
+
+.top-title-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 20px;
+    width: 100%;
+}
+
+.top-title-img {
+    max-width: 90%;
+    width: 500px;
+    height: auto;
+    filter: drop-shadow(5px 5px 0px #000);
+}
+
+@media (max-width: 768px) {
+    .top-title-container {
+        padding-top: 20px;
+    }
+    .top-title-img {
+        width: 80%;
+    }
+}
