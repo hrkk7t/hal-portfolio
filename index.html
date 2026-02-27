@@ -3,972 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>イベントミツケタ！入力補助ツール</title>
-    <link rel="icon" type="image/png" href="icon.png">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap');
-
-        :root {
-            --primary-color: #6f72d3;
-            --accent-color: #F79489;
-            --text-color: #333;
-            --sub-text-color: #777;
-            --bg-color: #f4f7f9;
-            --surface-color: #ffffff;
-            --border-color: #e0e6ec;
-            --hover-darken: #5a5db0;
-            --danger-color: #dc3545;
-        }
-
-        body {
-            font-family: 'Noto Sans JP', sans-serif;
-            background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
-            color: var(--text-color);
-            margin: 0;
-            padding: 30px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            box-sizing: border-box;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 800px;
-            background-color: var(--surface-color);
-            padding: 30px 40px;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            margin-bottom: 20px;
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px;
-            }
-             body {
-                padding: 20px 10px;
-            }
-        }
-
-        h2 {
-            text-align: center;
-            color: var(--primary-color);
-            font-weight: 500;
-            margin-bottom: 30px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 15px;
-            margin-top: 0;
-        }
-        
-        .textarea-wrapper {
-            position: relative;
-            margin-bottom: 25px;
-        }
-
-        .textarea-label {
-            font-weight: 700;
-            color: var(--sub-text-color);
-            margin-bottom: 10px;
-            display: block;
-            font-size: 0.9em;
-        }
-
-        textarea {
-            width: 100%;
-            height: 150px;
-            padding: 15px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 16px;
-            font-family: 'Noto Sans JP', sans-serif;
-            resize: vertical;
-            transition: border-color 0.3s, box-shadow 0.3s;
-            box-sizing: border-box;
-        }
-
-        textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(111, 114, 211, 0.25);
-        }
-        
-        #outputText {
-            background-color: #f8f9fa;
-        }
-
-        #copy-feedback {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--primary-color);
-            color: white;
-            padding: 12px 25px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 500;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.5s ease;
-            z-index: 1000;
-        }
-
-        #copy-feedback.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) translateY(-20px);
-        }
-
-        .tabs {
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .tab-button {
-            padding: 10px 20px;
-            font-size: 16px;
-            font-weight: 500;
-            border: none;
-            background-color: transparent;
-            color: var(--sub-text-color);
-            cursor: pointer;
-            border-radius: 8px 8px 0 0;
-            transition: all 0.3s ease;
-            border-bottom: 3px solid transparent;
-            margin-bottom: -1px;
-        }
-
-        .tab-button.active {
-            color: var(--primary-color);
-            background-color: var(--surface-color);
-            border-bottom: 3px solid var(--primary-color);
-            font-weight: 700;
-        }
-
-        .date-selection-area {
-            display: flex;
-            gap: 30px;
-            margin-top: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .date-selection-area {
-                flex-direction: column;
-            }
-        }
-
-        .calendar-section {
-            flex: 1;
-        }
-
-        .result-section {
-            flex: 1;
-        }
-
-        .calendar-wrapper {
-            background-color: transparent;
-            padding: 0;
-        }
-
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .calendar-header h3 {
-            margin: 0;
-            color: var(--text-color);
-            font-size: 1.4em;
-            font-weight: 500;
-        }
-
-        .month-nav {
-            background: var(--surface-color);
-            border: 1px solid var(--border-color);
-            border-radius: 50%;
-            width: 36px;
-            height: 36px;
-            cursor: pointer;
-            font-size: 18px;
-            color: var(--sub-text-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-        }
-
-        .month-nav:hover {
-            background-color: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-        }
-
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 8px;
-        }
-        
-        .day-of-week {
-            font-weight: 500;
-            color: var(--sub-text-color);
-            font-size: 0.8em;
-            padding-bottom: 10px;
-            text-align: center;
-        }
-        
-        .calendar-day {
-            cursor: pointer;
-            border-radius: 50%;
-            transition: all 0.2s ease-in-out;
-            border: 2px solid transparent;
-            width: 38px;
-            height: 38px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 500;
-        }
-        
-        .calendar-day:not(.empty):hover {
-            transform: scale(1.1);
-            background-color: #e9e9e9;
-        }
-
-        .calendar-day.today {
-            background-color: #ebedee;
-        }
-
-        .calendar-day.selected {
-            background-color: var(--accent-color);
-            color: white;
-            font-weight: 700;
-            transform: scale(1.1);
-        }
-
-        .calendar-day.empty {
-            cursor: default;
-        }
-        .calendar-day.empty:hover {
-            transform: none;
-            background: none;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .action-buttons button {
-            width: 100%;
-            padding: 12px;
-            font-size: 16px;
-            font-weight: 700;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        #generate-button {
-            flex: 2;
-            color: #fff;
-            background-color: var(--primary-color);
-        }
-        #generate-button:hover {
-             background-color: var(--hover-darken);
-             transform: translateY(-2px);
-             box-shadow: 0 4px 12px rgba(111, 114, 211, 0.3);
-        }
-
-        #reset-button {
-            flex: 1;
-            color: var(--sub-text-color);
-            background-color: var(--border-color);
-        }
-        #reset-button:hover {
-            background-color: #d4dbe1;
-            transform: translateY(-2px);
-        }
-        
-        .result-box {
-            margin-bottom: 20px;
-        }
-        .result-box textarea {
-            height: 100px;
-            background-color: #f8f9fa;
-        }
-        
-        .result-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .result-header .textarea-label {
-            margin-bottom: 0;
-        }
-        
-        .copy-button-small {
-            padding: 4px 8px;
-            font-size: 12px;
-            border: 1px solid var(--border-color);
-            background-color: transparent;
-            color: var(--sub-text-color);
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-        }
-        .copy-button-small:hover {
-            background-color: var(--border-color);
-            color: var(--primary-color);
-        }
-        
-        #copyButton {
-            padding: 6px 12px;
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--sub-text-color);
-            background-color: transparent;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        #copyButton:hover {
-            background-color: var(--border-color);
-            color: var(--primary-color);
-        }
-
-        #reset-converter-button:hover {
-            color: var(--danger-color);
-            background-color: rgba(220, 53, 69, 0.1);
-            border-color: var(--danger-color);
-        }
-        
-        .info-container {
-            text-align: center;
-            background-color: #f8f9fa;
-        }
-
-        #open-modal-btn {
-            background: none;
-            border: 1px solid var(--border-color);
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            color: var(--sub-text-color);
-            transition: color 0.3s, background-color 0.3s;
-        }
-        #open-modal-btn:hover {
-            color: var(--primary-color);
-            background-color: #e9ecef;
-        }
-
-        .modal {
-            position: fixed; 
-            z-index: 1001; 
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto; 
-            background-color: rgba(0,0,0,0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            visibility: hidden;
-            opacity: 0;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .modal.show {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: auto;
-            padding: 25px 35px;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            width: 90%;
-            max-width: 700px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            position: relative;
-            max-height: 85vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .modal-body {
-            overflow-y: auto;
-        }
-
-        .close-btn {
-            color: #aaa;
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 28px;
-            font-weight: bold;
-            line-height: 1;
-        }
-
-        .close-btn:hover,
-        .close-btn:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .modal-tabs {
-            display: flex;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 20px;
-        }
-
-        .modal-tab-button {
-            padding: 10px 15px;
-            cursor: pointer;
-            border: none;
-            background-color: transparent;
-            font-size: 16px;
-            font-weight: 500;
-            color: var(--sub-text-color);
-            border-bottom: 3px solid transparent;
-            transition: color 0.3s, border-color 0.3s;
-        }
-        .modal-tab-button.active {
-            color: var(--primary-color);
-            border-bottom-color: var(--primary-color);
-        }
-
-        .tab-content {
-            display: none;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        
-        .tab-content h3 {
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 10px;
-            margin-top: 0;
-            margin-bottom: 15px;
-        }
-        .tab-content h4 {
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-top: 25px;
-            margin-bottom: 10px;
-        }
-        .tab-content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        .tab-content th, .tab-content td {
-            border: 1px solid var(--border-color);
-            padding: 10px;
-            text-align: left;
-            font-size: 14px;
-        }
-        .tab-content th {
-            background-color: #f8f9fa;
-            font-weight: 500;
-        }
-        .tab-content td:first-child {
-            font-weight: 500;
-            min-width: 120px;
-        }
-        .tab-content ul {
-            padding-left: 20px;
-            line-height: 1.8;
-        }
-        .tab-content li {
-            margin-bottom: 8px;
-        }
-
-    </style>
+    <title>PORTFOLIO</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=DotGothic16&display=swap" rel="stylesheet">
 </head>
 <body>
-
-    <div class="container">
-        <h2>テキストコンバーター</h2>
-        <div class="textarea-wrapper">
-            <div class="result-header">
-                <label for="inputText" class="textarea-label">元のテキスト</label>
-                <button id="reset-converter-button" class="copy-button-small" title="リセット">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm-8.068 1a.5.5 0 0 1 .498.436L4.088 14.5a1 1 0 0 0 .994.858h6.23a1 1 0 0 0 .994-.858l.853-10.66a.5.5 0 0 1 .498-.436zM4.5 5.5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5m3 0a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5m3 0a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5"/>
-                    </svg>
-                </button>
-            </div>
-            <textarea id="inputText" placeholder="ここにテキストを入力してください..."></textarea>
-        </div>
-
-        <div class="textarea-wrapper">
-            <div class="result-header">
-                 <label for="outputText" class="textarea-label">変換後のテキスト</label>
-                 <button id="copyButton">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg>
-                      コピー
-                 </button>
-            </div>
-            <textarea id="outputText" readonly placeholder="変換結果がここに表示されます"></textarea>
-        </div>
+    <div id="loading-screen">
+        <img src="images/loading.png" alt="Now Loading..." class="loading-character">
+        <p class="loading-text">NOW LOADING...</p>
     </div>
-
-    <div class="container">
-        <h2>日付入力補助ツール</h2>
-        <div class="tabs">
-            <button id="tab-range" class="tab-button active">単日・連続</button>
-            <button id="tab-multiple" class="tab-button">複数選択</button>
+    <header class="site-header">
+        <button class="hamburger-button" id="js-hamburger">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+        <nav class="hamburger-nav" id="js-nav">
+            <ul>
+                <li><a href="#top">TOP</a></li>
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="works.html">WORKS</a></li>
+                <li><a href="illust.html">ILLUST</a></li>
+                <li><a href="#contact">CONTACT</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div id="top" class="top-title-container">
+            <img src="images/title.png" alt="PORTFOLIO TITLE" class="top-title-img">
         </div>
-        <div class="date-selection-area">
-            <div class="calendar-section">
-                <div class="calendar-wrapper">
-                    <div class="calendar-header">
-                        <button id="prev-month" class="month-nav">&lt;</button>
-                        <h3 id="calendar-year-month"></h3>
-                        <button id="next-month" class="month-nav">&gt;</button>
+        <section id="about" class="content-section is-left">
+            <div class="window">
+                <div class="title-bar">
+                    <div class="title">ABOUT</div>
+                    <div class="buttons">
+                        <div class="btn-minimize"></div>
+                        <div class="btn-maximize"></div>
+                        <div class="btn-close"></div>
                     </div>
-                    <div class="calendar-grid">
-                        <div class="day-of-week">日</div>
-                        <div class="day-of-week">月</div>
-                        <div class="day-of-week">火</div>
-                        <div class="day-of-week">水</div>
-                        <div class="day-of-week">木</div>
-                        <div class="day-of-week">金</div>
-                        <div class="day-of-week">土</div>
-                    </div>
-                    <div id="calendar-body" class="calendar-grid"></div>
-                    <div class="action-buttons">
-                        <button id="reset-button">リセット</button>
-                        <button id="generate-button">生成</button>
+                </div>
+                <div class="window-content">
+                    <div class="about-container">
+                        <div class="about-image-frame">
+                            <img src="images/about.png" alt="あなたのキャラクター">
+                        </div>
+                        <div class="about-profile">
+                            <h3 class="profile-block-title">NAME: HAL_T</h3>
+                            <div class="profile-skill-block">
+                                <h3 class="profile-block-title with-icon">SKILL</h3>
+                                <p class="profile-skill-list">
+                                    <strong>使用言語:</strong> HTML, CSS, JavaScript, PHP<br>
+                                    <strong>使用ツール:</strong> Figma, Adobe XD/Illustrator/Photoshop, VSCode, GitHub, WordPress
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="result-section">
-                <div class="result-box">
-                    <div class="result-header">
-                        <label for="japanese-output" class="textarea-label">日本語表記</label>
-                        <button id="copy-japanese" class="copy-button-small" title="コピー">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg>
-                        </button>
-                    </div>
-                    <textarea id="japanese-output" readonly></textarea>
-                </div>
-                <div class="result-box">
-                    <div class="result-header">
-                        <label for="connected-output" class="textarea-label">連結テキスト (カンマ区切り)</label>
-                        <button id="copy-connected" class="copy-button-small" title="コピー">
-                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg>
-                        </button>
-                    </div>
-                    <textarea id="connected-output" readonly></textarea>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="container info-container">
-        <button id="open-modal-btn">使用説明書</button>
-    </div>
-
-    <div id="info-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <div class="modal-tabs">
-                <button class="modal-tab-button active" data-tab="usage">このツールの使い方</button>
-                <button class="modal-tab-button" data-tab="chart">変換対応表</button>
-            </div>
-            <div class="modal-body">
-                <div id="content-usage" class="tab-content active">
-                    <h3>テキストコンバーター</h3>
-                    <ul>
-                        <li><strong>元のテキスト</strong>に文章を入力すると、<strong>変換後のテキスト</strong>に自動で変換結果が表示されます。</li>
-                        <li>英数字と一部の記号は半角に、カタカナや日本語で使われる多くの記号は全角に自動変換されます。</li>
-                        <li>「令和3年」のような和暦は「2021年」のように西暦に変換されます。</li>
-                        <li>変換後のテキストは、コピーボタンでクリップボードにコピーできます。</li>
-                    </ul>
-
-                    <h3>日付入力補助ツール</h3>
-                    <ul>
-                        <li><strong>単日・連続タブ</strong>: 期間の開始日と終了日をクリックすると、その間の日付が全て選択されます。もう一度クリックするとリセットされます。</li>
-                        <li><strong>複数選択タブ</strong>: 任意の日付を複数クリックして選択できます。もう一度クリックすると選択解除されます。</li>
-                        <li><strong>生成ボタン</strong>: 選択した日付を、下の2つのテキストエリアに整形して出力します。</li>
-                        <li><strong>リセットボタン</strong>: カレンダーの選択を全て解除します。</li>
-                    </ul>
-                </div>
-                <div id="content-chart" class="tab-content">
-                    <h4>英数字</h4>
-                    <table>
-                        <thead><tr><th>カテゴリ</th><th>変換前（例）</th><th>変換後（例）</th></tr></thead>
-                        <tbody>
-                            <tr><td>全角アルファベット</td><td>ＡＢＣｄｅｆ</td><td>ABCdef</td></tr>
-                            <tr><td>全角数字</td><td>０１２３４５</td><td>012345</td></tr>
-                        </tbody>
-                    </table>
-
-                    <h4>カタカナ</h4>
-                    <table>
-                        <thead><tr><th>カテゴリ</th><th>変換前（例）</th><th>変換後（例）</th></tr></thead>
-                        <tbody>
-                            <tr><td>半角カタカナ</td><td>ｲﾍﾞﾝﾄ, ﾃﾞｰﾀ</td><td>イベント, データ</td></tr>
-                        </tbody>
-                    </table>
-
-                    <h4>記号</h4>
-                    <table>
-                         <thead><tr><th>カテゴリ</th><th>変換前</th><th>変換後</th><th>条件・備考</th></tr></thead>
-                         <tbody>
-                            <tr><td>ハイフン</td><td>- または －</td><td>～</td><td>数字の間にある場合のみ（電話番号は除く）</td></tr>
-                            <tr><td rowspan="2">カンマ</td><td>，</td><td>,</td><td>数字の間にある場合のみ</td></tr>
-                            <tr><td>,</td><td>、</td><td>上記以外の、数字の間にない場合</td></tr>
-                            <tr><td>コロン</td><td>:</td><td>：</td><td>URLの一部ではない場合</td></tr>
-                            <tr><td>括弧</td><td>() []</td><td>（）［］</td><td></td></tr>
-                            <tr><td>その他</td><td>~ ; ! ?</td><td>～；！?</td><td></td></tr>
-                            <tr><td>句読点</td><td>､ ｡</td><td>、 。</td><td>半角カタカナ用の句読点</td></tr>
-                         </tbody>
-                    </table>
-
-                    <h4>日付・年号</h4>
-                    <table>
-                         <thead><tr><th>カテゴリ</th><th>変換前（例）</th><th>変換後（例）</th></tr></thead>
-                         <tbody>
-                            <tr><td>和暦</td><td>令和3年, 平成元年</td><td>2021年, 1989年</td></tr>
-                         </tbody>
-                    </table>
-
-                    <h4>特殊文字（環境依存文字）</h4>
-                    <table>
-                         <thead><tr><th>カテゴリ</th><th>変換前（例）</th><th>変換後（例）</th></tr></thead>
-                         <tbody>
-                            <tr><td>曜日</td><td>㈪, ㈫...</td><td>（月）, （火）...</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div id="copy-feedback">コピーしました！</div>
-
- <script>
-    document.addEventListener('DOMContentLoaded', () => {
-
-        const copyToClipboard = (text, feedbackEl) => {
-            navigator.clipboard.writeText(text).then(() => {
-                feedbackEl.classList.add('show');
-                setTimeout(() => {
-                    feedbackEl.classList.remove('show');
-                }, 2000);
-            }).catch(err => {
-                console.error('コピーに失敗しました', err);
-                alert('コピーに失敗しました。');
-            });
-        };
-
-        const copyFeedback = document.getElementById('copy-feedback');
-
-        const inputText = document.getElementById('inputText');
-        const outputText = document.getElementById('outputText');
-        const mainCopyButton = document.getElementById('copyButton');
-        const resetConverterButton = document.getElementById('reset-converter-button');
+        </section>
         
-        if (inputText) {
-            const convertText = (text) => {
-                let convertedText = text;
-                const protectedData = [];
-
-                // ▼▼▼▼▼ 先に全角→半角の正規化を行うように修正 ▼▼▼▼▼
-                
-                // 1. 英数字、コロン、ハイフンを半角に正規化
-                convertedText = convertedText.replace(/[Ａ-Ｚａ-ｚ０-９]/g, (s) => String.fromCharCode(s.charCodeAt(0) - 0xFEE0));
-                convertedText = convertedText.replace(/：/g, ':');
-                convertedText = convertedText.replace(/－/g, '-');
-                
-                // ▲▲▲▲▲ ここまで ▲▲▲▲▲
-
-
-                // 2. 正規化された電話番号を保護
-                const phoneRegex = /0\d{1,4}-\d{1,4}-\d{3,4}/g;
-                convertedText = convertedText.replace(phoneRegex, (match) => {
-                    protectedData.push(match);
-                    return `__PROTECTED_${protectedData.length - 1}__`;
-                });
-
-                // 3. 残りの変換処理
-                const katakanaMap = {
-                    'ｶﾞ': 'ガ', 'ｷﾞ': 'ギ', 'ｸﾞ': 'グ', 'ｹﾞ': 'ゲ', 'ｺﾞ': 'ゴ', 'ｻﾞ': 'ザ', 'ｼﾞ': 'ジ', 'ｽﾞ': 'ズ', 'ｾﾞ': 'ゼ', 'ｿﾞ': 'ゾ',
-                    'ﾀﾞ': 'ダ', 'ﾁﾞ': 'ヂ', 'ﾂﾞ': 'ヅ', 'ﾃﾞ': 'デ', 'ﾄﾞ': 'ド', 'ﾊﾞ': 'バ', 'ﾋﾞ': 'ビ', 'ﾌﾞ': 'ブ', 'ﾍﾞ': 'ベ', 'ﾎﾞ': 'ボ',
-                    'ﾊﾟ': 'パ', 'ﾋﾟ': 'ピ', 'ﾌﾟ': 'プ', 'ﾍﾟ': 'ペ', 'ﾎﾟ': 'ポ', 'ｳﾞ': 'ヴ', 'ｱ': 'ア', 'ｲ': 'イ', 'ｳ': 'ウ', 'ｴ': 'エ', 'ｵ': 'オ',
-                    'ｶ': 'カ', 'ｷ': 'キ', 'ｸ': 'ク', 'ｹ': 'ケ', 'ｺ': 'コ', 'ｻ': 'サ', 'ｼ': 'シ', 'ｽ': 'ス', 'ｾ': 'セ', 'ｿ': 'ソ',
-                    'ﾀ': 'タ', 'ﾁ': 'チ', 'ﾂ': 'ツ', 'ﾃ': 'テ', 'ﾄ': 'ト', 'ﾅ': 'ナ', 'ﾆ': 'ニ', 'ﾇ': 'ヌ', 'ﾈ': 'ネ', 'ﾉ': 'ノ',
-                    'ﾊ': 'ハ', 'ﾋ': 'ヒ', 'ﾌ': 'フ', 'ﾍ': 'ヘ', 'ﾎ': 'ホ', 'ﾏ': 'マ', 'ﾐ': 'ミ', 'ﾑ': 'ム', 'ﾒ': 'メ', 'ﾓ': 'モ',
-                    'ﾔ': 'ヤ', 'ﾕ': 'ユ', 'ﾖ': 'ヨ', 'ﾗ': 'ラ', 'ﾘ': 'リ', 'ﾙ': 'ル', 'ﾚ': 'レ', 'ﾛ': 'ロ', 'ﾜ': 'ワ', 'ｦ': 'ヲ', 'ﾝ': 'ン',
-                    'ｧ': 'ァ', 'ｨ': 'ィ', 'ｩ': 'ゥ', 'ｪ': 'ェ', 'ｫ': 'ォ', 'ｯ': 'ッ', 'ｬ': 'ャ', 'ｭ': 'ュ', 'ｮ': 'ョ', 'ｰ': 'ー'
-                };
-                const re = new RegExp('(' + Object.keys(katakanaMap).join('|') + ')', 'g');
-                convertedText = convertedText.replace(re, (m) => katakanaMap[m]);
-                
-                convertedText = convertedText.replace(/([:,\s　、]|^)(\d+)-(\d+)/g, (match, p1, p2, p3) => {
-                     return `${p1}${p2}～${p3}`;
-                });
-                
-                convertedText = convertedText.replace(/(\d+)－(\d+)/g, '$1-$2');
-                
-                convertedText = convertedText.replace(/(?<=[0-9])，(?=[0-9])/g, ',');
-
-                convertedText = convertedText.replace(/,/g, (match, offset, string) => {
-                    const prevChar = string.charAt(offset - 1);
-                    const nextChar = string.charAt(offset + 1);
-                    if (/[0-9]/.test(prevChar) && /[0-9]/.test(nextChar)) {
-                        return ',';
-                    }
-                    return '、';
-                });
-
-                const toFullWidthMap = { '(': '（', ')': '）', '[': '［', ']': '］', '「': '「', '」': '」', '、': '、', '。': '。', '~': '～', ';': '；', '､': '、', '｡': '。', '!': '！', '?': '？', ':': '：' };
-                convertedText = convertedText.replace(/[()\[\]「」、。~;､｡!?:]/g, (s) => {
-                    if (s === ':' && /(https?|ftp):\/\//.test(text)) {
-                        return s;
-                    }
-                    return toFullWidthMap[s] || s;
-                });
-                
-                const dayMap = { '㈪': '（月）', '㈫': '（火）', '㈬': '（水）', '㈭': '（木）', '㈮': '（金）', '㈯': '（土）', '㈰': '（日）' };
-                convertedText = convertedText.replace(/[㈪㈫㈬㈭㈮㈯㈰]/g, (match) => dayMap[match]);
-                
-                const eraStartYears = { '令和': 2019, '平成': 1989, '昭和': 1926, '大正': 1912, '明治': 1868 };
-                const eraRegex = /(令和|平成|昭和|大正|明治)(\d{1,2}|元)年/g;
-                convertedText = convertedText.replace(eraRegex, (match, era, year) => {
-                    const eraStartYear = eraStartYears[era];
-                    if (eraStartYear) {
-                        const warekiYear = (year === '元') ? 1 : parseInt(year, 10);
-                        const seirekiYear = eraStartYear + warekiYear - 1;
-                        return `${seirekiYear}年`;
-                    }
-                    return match;
-                });
-
-                convertedText = convertedText.replace(/__PROTECTED_(\d+)__/g, (match, index) => {
-                    return protectedData[parseInt(index, 10)];
-                });
-
-                return convertedText;
-            };
-
-            inputText.addEventListener('input', () => {
-                outputText.value = convertText(inputText.value);
-            });
-            mainCopyButton.addEventListener('click', () => {
-                if (outputText.value) copyToClipboard(outputText.value, copyFeedback);
-            });
-
-            resetConverterButton.addEventListener('click', () => {
-                inputText.value = '';
-                outputText.value = '';
-            });
-        }
-
-        // (以下、カレンダーやモーダルのコードは変更ありません)
-        const calendarYearMonth = document.getElementById('calendar-year-month');
-        const calendarBody = document.getElementById('calendar-body');
-        const prevMonthBtn = document.getElementById('prev-month');
-        const nextMonthBtn = document.getElementById('next-month');
-        const tabRange = document.getElementById('tab-range');
-        const tabMultiple = document.getElementById('tab-multiple');
-        const generateBtn = document.getElementById('generate-button');
-        const resetButton = document.getElementById('reset-button');
-        const japaneseOutput = document.getElementById('japanese-output');
-        const connectedOutput = document.getElementById('connected-output');
-        const copyJapaneseBtn = document.getElementById('copy-japanese');
-        const copyConnectedBtn = document.getElementById('copy-connected');
-
-        let currentDate = new Date();
-        let selectionMode = 'range';
-        let selectedDates = [];
-        let rangeStart = null;
-
-        const renderCalendar = () => {
-            calendarBody.innerHTML = '';
-            const year = currentDate.getFullYear();
-            const month = currentDate.getMonth();
-            calendarYearMonth.textContent = `${year}年 ${month + 1}月`;
-            const firstDay = new Date(year, month, 1).getDay();
-            const lastDate = new Date(year, month + 1, 0).getDate();
-            for (let i = 0; i < firstDay; i++) {
-                const emptyCell = document.createElement('div');
-                emptyCell.classList.add('calendar-day', 'empty');
-                calendarBody.appendChild(emptyCell);
-            }
-            for (let i = 1; i <= lastDate; i++) {
-                const dateCell = document.createElement('div');
-                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
-                dateCell.classList.add('calendar-day');
-                dateCell.textContent = i;
-                dateCell.dataset.date = dateStr;
-                const today = new Date();
-                if (year === today.getFullYear() && month === today.getMonth() && i === today.getDate()) {
-                    dateCell.classList.add('today');
-                }
-                if (selectedDates.includes(dateStr)) {
-                    dateCell.classList.add('selected');
-                }
-                dateCell.addEventListener('click', () => handleDateClick(dateStr));
-                calendarBody.appendChild(dateCell);
-            }
-        };
-        const handleDateClick = (dateStr) => {
-            if (selectionMode === 'range') {
-                if (!rangeStart || selectedDates.length > 1) {
-                    rangeStart = new Date(dateStr + 'T00:00:00');
-                    selectedDates = [dateStr];
-                } else {
-                    const rangeEnd = new Date(dateStr + 'T00:00:00');
-                    selectedDates = [];
-                    const start = rangeStart < rangeEnd ? rangeStart : rangeEnd;
-                    const end = rangeStart < rangeEnd ? rangeEnd : rangeStart;
-                    let currentDateInRange = new Date(start);
-                    while (currentDateInRange <= end) {
-                        const y = currentDateInRange.getFullYear();
-                        const m = String(currentDateInRange.getMonth() + 1).padStart(2, '0');
-                        const d = String(currentDateInRange.getDate()).padStart(2, '0');
-                        selectedDates.push(`${y}-${m}-${d}`);
-                        currentDateInRange.setDate(currentDateInRange.getDate() + 1);
-                    }
-                    rangeStart = null;
-                }
-            } else {
-                const index = selectedDates.indexOf(dateStr);
-                if (index > -1) {
-                    selectedDates.splice(index, 1);
-                } else {
-                    selectedDates.push(dateStr);
-                }
-            }
-            renderCalendar();
-        };
-        const updateResults = () => {
-            if (selectedDates.length === 0) {
-                japaneseOutput.value = '';
-                connectedOutput.value = '';
-                return;
-            }
-            selectedDates.sort();
-            connectedOutput.value = selectedDates.map(d => d.replace(/-/g, '')).join(',');
-            const formatDateJp = (dateStr) => {
-                const date = new Date(dateStr + 'T00:00:00');
-                const year = date.getFullYear();
-                const month = date.getMonth() + 1;
-                const day = date.getDate();
-                const weekday = ['日', '月', '火', '水', '木', '金', '土'][date.getDay()];
-                return { year, month, day, weekday, str: `${year}年${month}月${day}日（${weekday}）` };
-            };
-            if (selectedDates.length === 1) {
-                    japaneseOutput.value = formatDateJp(selectedDates[0]).str;
-                    return;
-            }
-            let isContinuous = true;
-            for(let i = 0; i < selectedDates.length - 1; i++) {
-                const current = new Date(selectedDates[i] + 'T00:00:00');
-                const next = new Date(selectedDates[i+1] + 'T00:00:00');
-                current.setDate(current.getDate() + 1);
-                if (current.getTime() !== next.getTime()) {
-                    isContinuous = false;
-                    break;
-                }
-            }
-            const start = formatDateJp(selectedDates[0]);
-            const end = formatDateJp(selectedDates[selectedDates.length - 1]);
-            if (isContinuous) {
-                if (start.year === end.year) {
-                    if (start.month === end.month) {
-                        japaneseOutput.value = `${start.year}年${start.month}月${start.day}日（${start.weekday}）～${end.day}日（${end.weekday}）`;
-                    } else {
-                        japaneseOutput.value = `${start.str}～${end.month}月${end.day}日（${end.weekday}）`;
-                    }
-                } else {
-                    japaneseOutput.value = `${start.str}～${end.str}`;
-                }
-            } else {
-                japaneseOutput.value = selectedDates.map(d => formatDateJp(d).str).join('、');
-            }
-        };
-        const resetAll = () => {
-            selectedDates = [];
-            rangeStart = null;
-            renderCalendar();
-            updateResults();
-        };
-        prevMonthBtn.addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(); });
-        nextMonthBtn.addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(); });
-        tabRange.addEventListener('click', () => switchTab('range'));
-        tabMultiple.addEventListener('click', () => switchTab('multiple'));
-        const switchTab = (mode) => {
-            selectionMode = mode;
-            tabRange.classList.toggle('active', mode === 'range');
-            tabMultiple.classList.toggle('active', mode === 'multiple');
-            resetAll();
-        };
-        generateBtn.addEventListener('click', updateResults);
-        resetButton.addEventListener('click', resetAll);
-        copyJapaneseBtn.addEventListener('click', () => { if (japaneseOutput.value) copyToClipboard(japaneseOutput.value, copyFeedback); });
-        copyConnectedBtn.addEventListener('click', () => { if (connectedOutput.value) copyToClipboard(connectedOutput.value, copyFeedback); });
-        renderCalendar();
-
-        const modal = document.getElementById("info-modal");
-        const btn = document.getElementById("open-modal-btn");
-        const span = document.getElementsByClassName("close-btn")[0];
-        const modalTabs = document.querySelectorAll('.modal-tab-button');
-        const modalTabContents = document.querySelectorAll('.tab-content');
-
-        btn.onclick = function() {
-            modal.classList.add("show");
-        }
-
-        span.onclick = function() {
-            modal.classList.remove("show");
-        }
-
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.classList.remove("show");
-            }
-        }
-
-        modalTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                modalTabs.forEach(t => t.classList.remove('active'));
-                modalTabContents.forEach(c => c.classList.remove('active'));
-
-                tab.classList.add('active');
-                const contentId = `content-${tab.dataset.tab}`;
-                document.getElementById(contentId).classList.add('active');
-            });
-        });
-    });
-</script>
+        <section id="works" class="content-section is-right">
+            <div class="window">
+                <div class="title-bar">
+                    <div class="title">WORKS</div>
+                    <div class="buttons">
+                        <div class="btn-minimize"></div>
+                        <div class="btn-maximize"></div>
+                        <div class="btn-close"></div>
+                    </div>
+                </div>
+                <div class="window-content works-buttons-grid">
+                    <a href="works.html" class="work-button">HOMEPAGE</a>
+                    <a href="works.html" class="work-button">UI</a>
+                    <a href="works.html" class="work-button">GRAPHIC</a>
+                    <a href="works.html" class="work-button">LOGO</a>
+                </div>
+            </div>
+        </section>
+        
+        <section id="illust" class="content-section is-left">
+            <div class="window">
+                <div class="title-bar">
+                    <div class="title">ILLUST</div>
+                    <div class="buttons">
+                        <div class="btn-minimize"></div>
+                        <div class="btn-maximize"></div>
+                        <div class="btn-close"></div>
+                    </div>
+                </div>
+                <div class="window-content works-buttons-grid">
+                    <a href="illust.html" class="work-button">ORIGINAL</a>
+                    <a href="illust.html" class="work-button">FAN ART</a>
+                </div>
+            </div>
+        </section>
+        
+        <section id="contact" class="content-section">
+             <div class="window">
+                <div class="title-bar">
+                    <div class="title">CONTACT</div>
+                    <div class="buttons">
+                        <div class="btn-minimize"></div>
+                        <div class="btn-maximize"></div>
+                        <div class="btn-close"></div>
+                    </div>
+                </div>
+                <div class="window-content">
+                    <p>ご連絡は<a href="mailto:kinihanasakuyoru@gmail.com">こちら</a>まで
+</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="site-footer">
+        <nav>
+            <ul>
+                <li><a href="#top">TOP</a></li>
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="works.html">WORKS</a></li>
+                <li><a href="illust.html">ILLUST</a></li>
+                <li><a href="#contact">CONTACT</a></li>
+            </ul>
+        </nav>
+        <p class="copyright">&copy;2025 HAL_T</p>
+        <img src="images/barcode.png" alt="barcode" class="barcode-img">
+    </footer>
+    <script src="script.js"></script>
 </body>
 </html>
+
+
